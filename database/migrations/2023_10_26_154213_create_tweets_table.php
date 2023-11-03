@@ -20,6 +20,8 @@ return new class extends Migration
             $table->string('shareUrl')->nullable();
             $table->integer('like')->nullable()->default(0);
             $table->integer('numOfComments')->nullable()->default(0);
+            $table->integer('shares')->nullable()->default(0);
+            $table->integer('views')->nullable()->default(0);
         });
     }
 

@@ -10,7 +10,7 @@ class Tweet extends Model
 {
     use HasFactory;
 
-    protected $fillable=['message','img','user_id','shareUrl','like','numOfComments'];
+    protected $fillable=['message','img','user_id','shareUrl','like','numOfComments','shares','views'];
 
     public function user()
     {

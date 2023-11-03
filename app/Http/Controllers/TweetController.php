@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\TweetIndexResource;
 use App\Models\Tweet;
 use Illuminate\Http\Request;
 
@@ -10,8 +11,7 @@ class TweetController extends Controller
     //Get All Tweets
     public function index()
     {
-        $tweets = Tweet::all();
-        return ($tweets);
+       return TweetIndexResource::collection(Tweet::all());
     }
 
     //Get Tweet With Specific ID
