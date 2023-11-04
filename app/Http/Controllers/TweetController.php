@@ -11,7 +11,7 @@ class TweetController extends Controller
     //Get All Tweets
     public function index()
     {
-       return TweetIndexResource::collection(Tweet::all());
+        return TweetIndexResource::collection(Tweet::all());
     }
 
     //Get Tweet With Specific ID
@@ -26,14 +26,17 @@ class TweetController extends Controller
         $formFields = $request->validate([
             "message" => "required",
             "shareUrl" => "url",
+            "user_id" => ["required", "integer"],
+            "file"=>'mimes:jpeg,jpg,png,mp4,x-m4v|max:5000'
         ]);
 
         //Check if request has an image - if it has store it in the public imgs folder
-        if ($request->hasFile('img')) {
-            $formFields['logo'] = $request->file('img')->store('imgs', 'public');
+        if ($request->hasFile('file')) {
+            $formFields['file'] = $request->file('file')->store('files', 'public');
         }
 
-        $formFields['user_id'] = auth()->id();
+        //WhHEN WE IMPLEMENT LOGIN UNCOMMENT THIS
+        /* $formFields['user_id'] = auth()->id(); */
 
         Tweet::create($formFields);
 
@@ -46,12 +49,12 @@ class TweetController extends Controller
         $formFields = $request->validate([
             "message" => "required",
             "shareUrl" => "url",
-            "user_id" => ['required', 'int']
+            "user_id" => ['required', 'integer']
         ]);
 
         //Check if request has an image - if it has store it in the public imgs folder
-        if ($request->hasFile('img')) {
-            $formFields['logo'] = $request->file('img')->store('imgs', 'public');
+        if ($request->hasFile('file')) {
+            $formFields['file'] = $request->file('file')->store('files', 'public');
         }
 
         $tweet->update($formFields);

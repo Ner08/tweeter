@@ -35,7 +35,7 @@ class TweetIndexResource extends JsonResource
             'message' => $this->message,
             'name' => $this->user->name,
             'userName' => $this->user->userName,
-            'img' => $this->img,
+            'file' => $this->file,
             'user_id' => $this->user_id,
             'share_url' => $this->share_url,
             'like' => $this->like,

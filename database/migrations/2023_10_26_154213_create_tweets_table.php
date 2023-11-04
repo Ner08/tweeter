@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->timestamps();
             $table->text('message');
-            $table->string('img')->nullable();
+            $table->string('file')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->string('shareUrl')->nullable();
             $table->integer('like')->nullable()->default(0);
