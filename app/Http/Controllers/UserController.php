@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Auth;
 use App\Http\Resources\UserIndexResource;
 use Illuminate\Contracts\Session\Session;
+use Illuminate\Support\Facades\Hash;
 
 class UserController extends Controller
 {
@@ -34,10 +36,16 @@ class UserController extends Controller
 
         $user = User::create($formFields);
 
-        auth()->login($user);
+        $token = $user->createToken('accessToken')->plainTextToken;
 
-        return response()->json(['status' => 'success'], 200);
+        $response = [
+            'user' => $user,
+            'accessToken' => $token,
+            'id' => $user->id
 
+        ];
+
+        return response($response, 201);
     }
     public function update(Request $request, User $user)
     {
@@ -69,23 +77,40 @@ class UserController extends Controller
     public function login(Request $request)
     {
         $formFields = $request->validate([
-            "email" => ["required,email"],
-            "password" => 'required'
+            'email' => ['required', 'email'],
+            'password' => 'required'
         ]);
 
-        if (auth()->attempt($formFields)) {
-            $request->session()->regenerate();
+        //Check Email
+        $user = User::where('email', $formFields['email'])->first();
 
-            return response()->json(['status' => 'success'], 200);
+        //Check Password
+
+        if (!$user || !Hash::check($formFields['password'], $user->password)) {
+            return response([
+                'message' => 'Bad Credentials'
+            ], 401);
         }
-        return response()->json(['status' => 'unsuccessful'], 404);
+
+        $token = $user->createToken('accessToken')->plainTextToken;
+
+        $response = [
+            'status' => 'success',
+            'user' => $user,
+            'token' => $token
+        ];
+
+        return response($response, 201);
     }
 
-    public function logout(Session $session)
+    public function logout(User $user)
     {
-        auth()->logout();
-        $session->invalidate();
-        $session->regenerateToken();
-        return json_encode(["status" => "success"], 200);
+        $user->tokens()->delete();
+        return response()->json(['status' => 'success', 'message' => 'Logged Out'], 200);
+    }
+
+    public function unauthenticated()
+    {
+        return response()->json(['message' => 'Unauthenticated'], 401);
     }
 }
