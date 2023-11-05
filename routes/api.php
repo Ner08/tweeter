@@ -13,15 +13,15 @@ Route::get('/unauthenticated', [UserController::class,'unauthenticated'])->name(
 //Protected Routes
 
 Route::group(['middleware'=> ['auth:sanctum']], function () {
+    /* Route::get('/users/tokenAuth', [UserController::class, 'checkToken']); */
     Route::post('/users/logout/{user}', [UserController::class, 'logout']);
+    Route::get('/users', [UserController::class, 'index']);
 //Put inside when frontend ready
 
 
 });
 
-
 Route::put('/users/{user}', [UserController::class, 'update']);
-Route::get('/users', [UserController::class, 'index']);
 Route::get('/users/{user}', [UserController::class, 'show']);
 Route::post('/users/{user}', [UserController::class, 'destroy']);
 

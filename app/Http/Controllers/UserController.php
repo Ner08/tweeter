@@ -94,9 +94,13 @@ class UserController extends Controller
 
         $token = $user->createToken('accessToken')->plainTextToken;
 
+
+        $userMod = $user;
+        $userMod['exists']=true;
+
         $response = [
             'status' => 'success',
-            'user' => $user,
+            'user' => $userMod,
             'token' => $token
         ];
 
@@ -111,6 +115,12 @@ class UserController extends Controller
 
     public function unauthenticated()
     {
-        return response()->json(['message' => 'Unauthenticated'], 401);
+        return response()->json(['message' => 'Unauthenticated', 'tokenAuthenticated' => false], 401);
     }
+
+
+   /*  public function checkToken()
+    {
+        return response()->json(['status' => 'success', 'message' => 'Token authenticated', 'tokenAuthenticated' => true]);
+    } */
 }
