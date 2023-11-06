@@ -27,7 +27,7 @@ class TweetController extends Controller
             "message" => "required",
             "shareUrl" => "url",
             "user_id" => ["required", "integer"],
-            "file"=>'mimes:jpeg,jpg,png,mp4,x-m4v|max:5000'
+            "file"=>'mimes:jpeg,jpg,png|max:5000'
         ]);
 
         //Check if request has an image - if it has store it in the public imgs folder

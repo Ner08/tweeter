@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             "password" => bcrypt("password"),
         ]);
 
-        Tweet::factory(30)->create([
+        Tweet::factory(5)->create([
             "user_id" => $user->id
         ]);
     }

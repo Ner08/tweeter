@@ -14,7 +14,7 @@ Route::get('/unauthenticated', [UserController::class,'unauthenticated'])->name(
 
 Route::group(['middleware'=> ['auth:sanctum']], function () {
     /* Route::get('/users/tokenAuth', [UserController::class, 'checkToken']); */
-    Route::post('/users/logout/{user}', [UserController::class, 'logout']);
+    Route::get('/users/logout/{user}', [UserController::class, 'logout']);
     Route::get('/users', [UserController::class, 'index']);
 //Put inside when frontend ready
 
