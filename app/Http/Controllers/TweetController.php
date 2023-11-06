@@ -11,7 +11,7 @@ class TweetController extends Controller
     //Get All Tweets
     public function index()
     {
-        return TweetIndexResource::collection(Tweet::all());
+        return TweetIndexResource::collection(Tweet::latest()->paginate(10));
     }
 
     //Get Tweet With Specific ID
@@ -24,9 +24,9 @@ class TweetController extends Controller
     public function store(Request $request)
     {
         $formFields = $request->validate([
-            "message" => "required",
+            "message" => "required_without:file",
             "shareUrl" => "url",
-            "user_id" => ["required", "integer"],
+            "user_id" => ['required','integer'],
             "file"=>'mimes:jpeg,jpg,png|max:5000'
         ]);
 
@@ -35,12 +35,10 @@ class TweetController extends Controller
             $formFields['file'] = $request->file('file')->store('files', 'public');
         }
 
-        //WhHEN WE IMPLEMENT LOGIN UNCOMMENT THIS
-        /* $formFields['user_id'] = auth()->id(); */
+        $tweet = Tweet::create($formFields);
+        $tweet = $tweet->refresh();
 
-        Tweet::create($formFields);
-
-        return response()->json(['status' => 'success'], 200);
+        return response()->json(['status' => 'success', 'tweet' => new TweetIndexResource($tweet)], 200);
     }
 
     //Update Tweet

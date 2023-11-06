@@ -15,8 +15,11 @@ class TweetIndexResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+
+        // Format a string (How Long Since Created)
         $diff = now()->diffInDays(Carbon::parse($this->created_at));
         $diffStr = $diff . "d";
+
         if ($diff == 0) {
             $diff = now()->diffInHours(Carbon::parse($this->created_at));
             $diffStr = $diff . "h";
@@ -37,6 +40,7 @@ class TweetIndexResource extends JsonResource
             'userName' => $this->user->userName,
             'file' => $this->file,
             'user_id' => $this->user_id,
+            'parent_tweet_id' => $this->tweet_id,
             'share_url' => $this->share_url,
             'like' => $this->like,
             'numOfComments' => $this->numOfComments,

@@ -4,8 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration
-{
+return new class extends Migration {
     /**
      * Run the migrations.
      */
@@ -14,9 +13,10 @@ return new class extends Migration
         Schema::create('tweets', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->text('message');
+            $table->text('message')->nullable()->default("");
             $table->string('file')->nullable();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->foreignId('tweet_id')->nullable()->onDelete('cascade');
             $table->string('shareUrl')->nullable();
             $table->integer('like')->nullable()->default(0);
             $table->integer('numOfComments')->nullable()->default(0);

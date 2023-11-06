@@ -5,6 +5,7 @@ namespace Database\Seeders;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use App\Models\User;
 use App\Models\Tweet;
+use App\Models\Comment;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -21,8 +22,6 @@ class DatabaseSeeder extends Seeder
             "password" => bcrypt("password"),
         ]);
 
-        Tweet::factory(5)->create([
-            "user_id" => $user->id
-        ]);
+        Tweet::factory(20)->create();
     }
 }

@@ -17,9 +17,15 @@ class TweetFactory extends Factory
     public function definition(): array
     {
         return [
-            'message'=> fake()->sentence(),
-            'like'=> fake()->numberBetween(0,80),
-            'numOfComments' => fake()->numberBetween(0,150)
+            'message' => fake()->sentence(),
+            'user_id' => 1,
+            'file' => 'files\/W0LX4iDQ9DK0MDzz4elGq15oq8AMsUS0NntqKpCz.png',
+            'tweet_id'=>fake()->numberBetween(0,20),
+            'like' => fake()->numberBetween(0, 80),
+            'numOfComments' => fake()->numberBetween(0, 150),
+            'views' => fake()->numberBetween(0, 1000),
+            'shares' => fake()->numberBetween(0, 40)
+
         ];
     }
 }

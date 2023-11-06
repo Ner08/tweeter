@@ -10,12 +10,15 @@ class Tweet extends Model
 {
     use HasFactory;
 
-    protected $fillable=['message','file','user_id','shareUrl','like','numOfComments','shares','views'];
+    protected $fillable = ['message', 'file', 'user_id', 'tweet_id', 'shareUrl', 'like', 'numOfComments', 'shares', 'views'];
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-
+    public function parentTweet()
+    {
+        return $this->belongsTo(Tweet::class, 'tweet_id');
+    }
 }
 
