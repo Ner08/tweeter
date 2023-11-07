@@ -17,7 +17,7 @@ class TweetController extends Controller
     //Get Tweet With Specific ID
     public function show(Tweet $tweet)
     {
-        return $tweet;
+        return new TweetIndexResource($tweet);
     }
 
     //Store Tweet
