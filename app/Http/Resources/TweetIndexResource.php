@@ -33,6 +33,12 @@ class TweetIndexResource extends JsonResource
             $diffStr = $diff . "s";
         }
 
+        //Getting tweet_id
+        $parentId = $this->parent !== null ? $this->parent->id : null;
+
+        //Getting number of comments
+        $numOfComments = $this->children()->count();
+
         return [
             'id' => $this->id,
             'message' => $this->message,
@@ -40,10 +46,10 @@ class TweetIndexResource extends JsonResource
             'userName' => $this->user->userName,
             'file' => $this->file,
             'user_id' => $this->user_id,
-            'parent_tweet_id' => $this->tweet_id,
+            'tweet_id' => $parentId,
             'share_url' => $this->share_url,
             'like' => $this->like,
-            'numOfComments' => $this->numOfComments,
+            'numOfComments' => $numOfComments,
             'shares' => $this->shares,
             'views' => $this->views,
             'createdAgo' => $diffStr,

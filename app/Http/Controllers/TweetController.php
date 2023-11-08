@@ -11,7 +11,7 @@ class TweetController extends Controller
     //Get All Tweets
     public function index()
     {
-        return TweetIndexResource::collection(Tweet::latest()->paginate(10));
+        return TweetIndexResource::collection(Tweet::latest()->paginate(15));
     }
 
     //Get Tweet With Specific ID
@@ -26,6 +26,7 @@ class TweetController extends Controller
         $formFields = $request->validate([
             "message" => "required_without:file",
             "shareUrl" => "url",
+            "tweet_id" => "integer",
             "user_id" => ['required','integer'],
             "file"=>'mimes:jpeg,jpg,png|max:5000'
         ]);
@@ -66,5 +67,10 @@ class TweetController extends Controller
         $tweet->delete();
 
         return response()->json(['status' => 'success'], 200);
+    }
+
+    //Get Comments
+    public function getChildTweets(Tweet $tweet){
+        return response()->json(['status' => 'success', 'comments' => TweetIndexResource::collection($tweet->children()->latest()->paginate(10))]);
     }
 }

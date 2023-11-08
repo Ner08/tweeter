@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\LikeController;
 use App\Http\Controllers\TweetController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -25,6 +26,11 @@ Route::group(['middleware' => ['auth:sanctum']], function () {
     //Tweets
     //CRUD Routes Tweets (index, show, store, update, destroy)
     Route::apiResource("tweets", TweetController::class);
+    Route::get('/tweets/comments/{tweet}', [TweetController::class,'getChildTweets']);
+
+    //Likes
+    Route::post('/like',[LikeController::class,'store']);
+    Route::delete('/unlike',[LikeController::class,'delete']);
 });
 
 

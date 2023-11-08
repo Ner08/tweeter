@@ -16,9 +16,17 @@ class Tweet extends Model
     {
         return $this->belongsTo(User::class, 'user_id');
     }
-    public function parentTweet()
+    public function likes()
+    {
+        return $this->hasMany(Like::class, 'tweet_id');
+    }
+    public function parent()
     {
         return $this->belongsTo(Tweet::class, 'tweet_id');
+    }
+    public function children()
+    {
+        return $this->hasMany(Tweet::class, 'tweet_id');
     }
 }
 
